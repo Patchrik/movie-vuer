@@ -4,6 +4,14 @@
     <v-main>
       <v-container>
         <search-results />
+        <v-row class="mt-6">
+          <v-col :sm="12" :md="6">
+            <movie-details />
+          </v-col>
+          <v-col :sm="12" :md="6">
+            <!-- Todo: REVIEWS GO HERE -->
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
@@ -11,14 +19,14 @@
 
 <script>
   import AppHeader from "./components/AppHeader.vue";
-  import SearchResults from "./components/SearchResults.vue";
+  import MovieDetails from "./components/MovieDetails.vue";
+  import SearchResults from "./components/SearchResults";
+
   export default {
-    name: "App",
-
-    components: { SearchResults, AppHeader },
-
-    data: () => ({
-      //
-    }),
+    components: {
+      SearchResults,
+      AppHeader,
+      MovieDetails,
+    },
   };
 </script>

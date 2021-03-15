@@ -1,15 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { FAKE_SEARCH_RESULTS, FAKE_MOVIE_DETAILS } from "./FAKE_DATA";
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    searchTerm: "home alone",
-    movieResults: FAKE_SEARCH_RESULTS,
-    movieDetails: FAKE_MOVIE_DETAILS,
+    searchTerm: "",
+    movieResults: [],
+    movieDetails: {},
     movieReviews: [],
   },
   mutations: {
@@ -35,8 +33,35 @@ export default new Vuex.Store({
       try {
         const res = await fetch(url);
         const data = await res.json();
+        console.log(data);
         commit("setSearchTerm", searchString);
         commit("setMovieResults", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async selectMovie({ commit }, movie) {
+      const apiBaseUrl = "https://api.themoviedb.org/3";
+      const apiKey = process.env.VUE_APP_MOVIE_API_KEY;
+      const movieDetailsURL = `${apiBaseUrl}/movie/${movie.id}?api_key=${apiKey}`;
+      const movieReviewURL = `${apiBaseUrl}/movie/${movie.id}/reviews?api_key=${apiKey}`;
+
+      try {
+        const movieDetailsRes = fetch(movieDetailsURL);
+        const movieReviewRes = fetch(movieReviewURL);
+        // We're allowing both of these to fire at the same time, so that if one takes 2 sec and the other takes 1 sec we're only waiting 2 secs
+        const [movieDetailsData, movieReviewData] = await Promise.all([
+          // Here we're again making using await. We're waiting for movieDetailsRes and movieReviewRes to receive the data. Then we're running .json() to convert the Res to usable
+          // data then placing it in two variables called movieDetailsData and movieReviewData.
+          (await movieDetailsRes).json(),
+          (await movieReviewRes).json(),
+        ]);
+
+        commit("setMovieDetails", movieDetailsData);
+        console.log(movieDetailsData);
+        commit("setMovieReviews", movieReviewData);
+        console.log(movieReviewData);
       } catch (error) {
         console.log(error);
       }
