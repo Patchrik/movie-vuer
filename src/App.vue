@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="red darken-1" dark> </v-app-bar>
+    <app-header />
     <v-main>
       <v-container>
         <search-results />
@@ -10,11 +10,12 @@
 </template>
 
 <script>
+  import AppHeader from "./components/AppHeader.vue";
   import SearchResults from "./components/SearchResults.vue";
   export default {
     name: "App",
 
-    components: { SearchResults },
+    components: { SearchResults, AppHeader },
 
     data: () => ({
       //
