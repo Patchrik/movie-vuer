@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     searchTerm: "",
     movieResults: [],
-    movieDetails: {},
+    movieDetails: null,
     movieReviews: [],
   },
   mutations: {
@@ -33,9 +33,9 @@ export default new Vuex.Store({
       try {
         const res = await fetch(url);
         const data = await res.json();
-        console.log(data);
         commit("setSearchTerm", searchString);
         commit("setMovieResults", data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -59,13 +59,19 @@ export default new Vuex.Store({
         ]);
 
         commit("setMovieDetails", movieDetailsData);
-        console.log(movieDetailsData);
-        commit("setMovieReviews", movieReviewData);
-        console.log(movieReviewData);
+        commit("setMovieReviews", movieReviewData.results);
       } catch (error) {
         console.log(error);
       }
     },
   },
   modules: {},
+  getters: {
+    viewableMovies(state) {
+      if (!state.movieResults.results) {
+        return [];
+      }
+      return state.movieResults.results.filter((movie) => !!movie.poster_path);
+    },
+  },
 });
