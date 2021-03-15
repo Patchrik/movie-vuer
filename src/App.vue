@@ -1,14 +1,20 @@
 <template>
-  <v-app> </v-app>
+  <v-app>
+    <v-app-bar app color="red darken-1" dark> </v-app-bar>
+    <v-main>
+      <v-container>
+        <search-results />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-  import HelloWorld from "./components/HelloWorld";
-
+  import SearchResults from "./components/SearchResults.vue";
   export default {
     name: "App",
 
-    components: {},
+    components: { SearchResults },
 
     data: () => ({
       //

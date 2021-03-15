@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { FAKE_MOVIE_DETAILS, FAKE_SEARCH_RESULTS } from "./Fake_DATA";
+import { FAKE_SEARCH_RESULTS, FAKE_MOVIE_DETAILS } from "./FAKE_DATA";
 
 Vue.use(Vuex);
 
