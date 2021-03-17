@@ -32,6 +32,16 @@
           >
         </div>
       </v-row>
+      <div class="mt-4" v-if="streamingResults.length > 1">
+        <v-chip
+          class="mr-1 mb-1"
+          v-for="service in streamingResults"
+          :key="service.id"
+          :href="service.url"
+          target="_blank"
+          >{{ service.display_name }}</v-chip
+        >
+      </div>
     </v-card-text>
   </v-card>
 </template>

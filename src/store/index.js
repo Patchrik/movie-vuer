@@ -39,6 +39,9 @@ export default new Vuex.Store({
         const data = await res.json();
         commit("setSearchTerm", searchString);
         commit("setMovieResults", data);
+        commit("setMovieDetails", null);
+        commit("setMovieReviews", []);
+        commit("setStreamingResults", []);
       } catch (error) {
         console.log(error);
       }
@@ -84,14 +87,27 @@ export default new Vuex.Store({
         });
         const data = await res.json();
 
-        console.log(
-          "Hello I'm the data from utelly: ",
-          data.results[0].locations
-        );
-        // Api JSON returns a results array with one object at index 0, we need the
-        // locations array on that Object at index 0. We're grabbing that object
-        // and then assigning it to the streaming results
-        commit("setStreamingResults", data.results[0].locations);
+        // TODO Fix this logic to check to see if we got no matches. Then let the user know.
+        if (data.results.length >= 1) {
+          const matchedMovie = data.results.forEach((result) => {
+            if (result.name === selectedMovieTitle) {
+              console.log(result.name + " matched " + selectedMovieTitle);
+              commit("setStreamingResults", result.locations);
+              console.log(
+                "This is the new result locations array",
+                result.locations
+              );
+              return result;
+            }
+          });
+          if (!matchedMovie) {
+            `ERROR: Looks like nothing matched your movie title. ${selectedMovieTitle}`;
+          }
+        } else {
+          console.log(
+            `ERROR: Looks like we didn't find anything that matched the name ${selectedMovieTitle}`
+          );
+        }
       } catch (error) {
         console.log("ERROR!", error);
       }
