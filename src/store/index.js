@@ -66,6 +66,7 @@ export default new Vuex.Store({
 
         commit("setMovieDetails", movieDetailsData);
         commit("setMovieReviews", movieReviewData.results);
+        commit("setStreamingResults", []);
       } catch (error) {
         console.log(error);
       }
@@ -73,11 +74,16 @@ export default new Vuex.Store({
 
     async getStreaming({ commit }, movieDetails) {
       const utellyKey = process.env.VUE_APP_UTELLY_KEY;
-      const selectedMovieTitle = movieDetails.title;
-      const utllyURL = `https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term=${selectedMovieTitle}&country=us`;
+      const selectedMovieIMDBid = movieDetails.imdb_id;
+      const utellyURL = `https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=${selectedMovieIMDBid}&source=imdb&country=us`;
+
+      console.log(
+        "This is the movie details that is passed in to the getStreaming",
+        movieDetails
+      );
 
       try {
-        const res = await fetch(utllyURL, {
+        const res = await fetch(utellyURL, {
           method: "GET",
           headers: {
             "x-rapidapi-key": utellyKey,
@@ -87,27 +93,9 @@ export default new Vuex.Store({
         });
         const data = await res.json();
 
-        // TODO Fix this logic to check to see if we got no matches. Then let the user know.
-        if (data.results.length >= 1) {
-          const matchedMovie = data.results.forEach((result) => {
-            if (result.name === selectedMovieTitle) {
-              console.log(result.name + " matched " + selectedMovieTitle);
-              commit("setStreamingResults", result.locations);
-              console.log(
-                "This is the new result locations array",
-                result.locations
-              );
-              return result;
-            }
-          });
-          if (!matchedMovie) {
-            `ERROR: Looks like nothing matched your movie title. ${selectedMovieTitle}`;
-          }
-        } else {
-          console.log(
-            `ERROR: Looks like we didn't find anything that matched the name ${selectedMovieTitle}`
-          );
-        }
+        commit("setStreamingResults", data.collection.locations);
+
+        console.log(data);
       } catch (error) {
         console.log("ERROR!", error);
       }
