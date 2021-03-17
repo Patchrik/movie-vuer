@@ -9,6 +9,7 @@ export default new Vuex.Store({
     movieResults: [],
     movieDetails: null,
     movieReviews: [],
+    streamingResults: [],
   },
   mutations: {
     setSearchTerm(state, newSearchTerm) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     setMovieReviews(state, newMovieReviews) {
       state.movieReviews = newMovieReviews;
     },
+    setStreamingResults(state, newStreamingResults) {
+      state.streamingResults = newStreamingResults;
+    },
   },
   actions: {
     async searchMovies({ commit }, searchString) {
@@ -35,7 +39,6 @@ export default new Vuex.Store({
         const data = await res.json();
         commit("setSearchTerm", searchString);
         commit("setMovieResults", data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -62,6 +65,35 @@ export default new Vuex.Store({
         commit("setMovieReviews", movieReviewData.results);
       } catch (error) {
         console.log(error);
+      }
+    },
+
+    async getStreaming({ commit }, movieDetails) {
+      const utellyKey = process.env.VUE_APP_UTELLY_KEY;
+      const selectedMovieTitle = movieDetails.title;
+      const utllyURL = `https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term=${selectedMovieTitle}&country=us`;
+
+      try {
+        const res = await fetch(utllyURL, {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key": utellyKey,
+            "x-rapidapi-host":
+              "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com",
+          },
+        });
+        const data = await res.json();
+
+        console.log(
+          "Hello I'm the data from utelly: ",
+          data.results[0].locations
+        );
+        // Api JSON returns a results array with one object at index 0, we need the
+        // locations array on that Object at index 0. We're grabbing that object
+        // and then assigning it to the streaming results
+        commit("setStreamingResults", data.results[0].locations);
+      } catch (error) {
+        console.log("ERROR!", error);
       }
     },
   },

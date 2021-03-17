@@ -16,25 +16,35 @@
     </v-card-subtitle>
     <v-card-text>
       {{ movieDetails.overview }}
-      <div class="mt-3">
-        <v-chip
-          class="mr-1"
-          v-for="genre in movieDetails.genres"
-          :key="genre.id"
-        >
-          {{ genre.name }}
-        </v-chip>
-      </div>
+      <v-row align-content="center" justify="space-between">
+        <div class="mt-4">
+          <v-chip
+            class="mr-1"
+            v-for="genre in movieDetails.genres"
+            :key="genre.id"
+          >
+            {{ genre.name }}
+          </v-chip>
+        </div>
+        <div class="py-2 mx-1 mt-1">
+          <v-btn rounded @click="getStreaming(movieDetails)"
+            >Where To Watch</v-btn
+          >
+        </div>
+      </v-row>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-  import { mapState } from "vuex";
+  import { mapState, mapActions } from "vuex";
 
   export default {
     computed: {
-      ...mapState(["movieDetails"]),
+      ...mapState(["movieDetails", "streamingResults"]),
+    },
+    methods: {
+      ...mapActions(["getStreaming"]),
     },
   };
 </script>
