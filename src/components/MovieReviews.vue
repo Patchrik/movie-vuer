@@ -15,7 +15,17 @@
           <v-list-item-subtitle>
             {{ formatDate(review.created_at) }}
           </v-list-item-subtitle>
-          <div class="mt-2">{{ review.content }}</div>
+          <v-expansion-panels inset>
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                expand-icon="mdi-book-open-blank-variant"
+                >{{ wordLimit(review.content, 15) }}</v-expansion-panel-header
+              >
+              <v-expansion-panel-content>
+                {{ review.content }}
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -27,6 +37,16 @@
   import { dateMixin } from "../mixins/movieMixins";
 
   export default {
+    methods: {
+      wordLimit(string, wordCount) {
+        const shortendStr = string
+          .split(" ")
+          .splice(0, wordCount)
+          .join(" ");
+        console.log(shortendStr);
+        return shortendStr + " ... Read More";
+      },
+    },
     computed: {
       ...mapState(["movieReviews"]),
     },
