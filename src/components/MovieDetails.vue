@@ -11,7 +11,7 @@
       </div>
       <div class="mt-2">
         <v-icon>mdi-calendar</v-icon>
-        Released {{ movieDetails.release_date }}
+        Released {{ formatDate(movieDetails.release_date) }}
       </div>
     </v-card-subtitle>
     <v-card-text>
@@ -48,6 +48,7 @@
 
 <script>
   import { mapState, mapActions } from "vuex";
+  import { dateMixin } from "../mixins/movieMixins";
 
   export default {
     computed: {
@@ -56,6 +57,7 @@
     methods: {
       ...mapActions(["getStreaming"]),
     },
+    mixins: [dateMixin],
   };
 </script>
 

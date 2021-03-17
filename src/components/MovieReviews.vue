@@ -12,7 +12,9 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ review.author }}</v-list-item-title>
-          <v-list-item-subtitle> {{ review.created_at }} </v-list-item-subtitle>
+          <v-list-item-subtitle>
+            {{ formatDate(review.created_at) }}
+          </v-list-item-subtitle>
           <div class="mt-2">{{ review.content }}</div>
         </v-list-item-content>
       </v-list-item>
@@ -22,10 +24,12 @@
 
 <script>
   import { mapState } from "vuex";
+  import { dateMixin } from "../mixins/movieMixins";
 
   export default {
     computed: {
       ...mapState(["movieReviews"]),
     },
+    mixins: [dateMixin],
   };
 </script>
