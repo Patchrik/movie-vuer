@@ -1,7 +1,7 @@
 <template>
   <div v-if="movieReviews && movieReviews.length > 0">
-    <h3 class="red--text">User Reviews</h3>
-    <v-list three-line>
+    <h3 class="primary--text">User Reviews</h3>
+    <v-list three-line class="v-list-container">
       <v-list-item v-for="review in movieReviews" :key="review.id">
         <v-list-item-avatar>
           <v-img
@@ -15,11 +15,12 @@
           <v-list-item-subtitle>
             {{ formatDate(review.created_at) }}
           </v-list-item-subtitle>
-          <v-expansion-panels inset>
-            <v-expansion-panel>
+          <v-expansion-panels>
+            <v-expansion-panel @click="openPanel">
               <v-expansion-panel-header
                 expand-icon="mdi-book-open-blank-variant"
-                >{{ wordLimit(review.content, 15) }}</v-expansion-panel-header
+                disable-icon-rotate
+                >{{ panelHeaderText(review) }}</v-expansion-panel-header
               >
               <v-expansion-panel-content>
                 {{ review.content }}
@@ -37,6 +38,11 @@
   import { dateMixin } from "../mixins/movieMixins";
 
   export default {
+    data() {
+      return {
+        panelOpen: false,
+      };
+    },
     methods: {
       wordLimit(string, wordCount) {
         const shortendStr = string
@@ -46,6 +52,12 @@
         console.log(shortendStr);
         return shortendStr + " ... Read More";
       },
+      openPanel() {
+        this.panelOpen = !this.panelOpen;
+      },
+      panelHeaderText(reviewObj) {
+        return this.panelOpen ? "" : this.wordLimit(reviewObj.content, 15);
+      },
     },
     computed: {
       ...mapState(["movieReviews"]),
@@ -53,3 +65,12 @@
     mixins: [dateMixin],
   };
 </script>
+
+<style scoped>
+  div {
+    border-radius: 5px;
+  }
+  .v-list-container {
+    border-radius: 5px !important;
+  }
+</style>

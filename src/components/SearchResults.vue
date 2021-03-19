@@ -1,5 +1,11 @@
 <template>
-  <v-sheet v-if="searchTerm" elevation="1" class="mx-auto" max-width="1000">
+  <v-sheet
+    v-if="searchTerm"
+    elevation="1"
+    class="mx-auto movie-slide-group secondary"
+    max-width="1000"
+    dark
+  >
     <h3 class="pl-5 mt-5">
       Found {{ movieResults.total_results }} results for "{{ searchTerm }}"
     </h3>
@@ -31,4 +37,8 @@
   };
 </script>
 
-<style></style>
+<style>
+  .movie-slide-group {
+    border-radius: 5px !important;
+  }
+</style>

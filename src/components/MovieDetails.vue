@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="movieDetails">
+  <v-card v-if="movieDetails" height="auto">
     <v-img
       :src="`https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`"
     ></v-img>
@@ -28,7 +28,7 @@
         </div>
         <div class="py-2 mx-1 mt-1">
           <v-btn rounded @click="getStreaming(movieDetails)"
-            >Where To Watch</v-btn
+            >Where To Vue</v-btn
           >
         </div>
       </v-row>
@@ -61,4 +61,8 @@
   };
 </script>
 
-<style></style>
+<style scoped>
+  .v-card {
+    overflow-y: auto;
+  }
+</style>

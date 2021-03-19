@@ -1,8 +1,8 @@
 <template>
-  <v-app>
+  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <app-header />
     <v-main>
-      <v-container>
+      <v-container fluid>
         <search-results />
         <v-row class="mt-6">
           <v-col :sm="12" :md="6">
@@ -30,5 +30,12 @@
       MovieDetails,
       MovieReviews,
     },
+    computed: {
+      theme() {
+        return this.$vuetify.theme.dark ? "dark" : "light";
+      },
+    },
   };
 </script>
+
+<style></style>

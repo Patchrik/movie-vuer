@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar app color="red darken-1" dark>
+  <v-app-bar app color="deep-purple lighten-1" dark>
     <v-row justify="space-between" align="center">
       <v-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
         <div class="d-flex align-center">
-          <h1>Movie Vuer</h1>
+          <h1>where to vue</h1>
         </div>
       </v-col>
 
@@ -15,7 +15,7 @@
             rounded
             filled
             placeholder="Search movie titles"
-            background-color="red lighten-2"
+            background-color="indigo darken-4"
             prepend-inner-icon="mdi-magnify"
           ></v-text-field>
         </form>
