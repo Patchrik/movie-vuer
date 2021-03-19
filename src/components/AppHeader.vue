@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="deep-purple lighten-1" dark>
+  <v-app-bar app color="primary" dark>
     <v-row justify="space-between" align="center">
       <v-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
         <div class="d-flex align-center">
@@ -15,7 +15,7 @@
             rounded
             filled
             placeholder="Search movie titles"
-            background-color="indigo darken-4"
+            background-color="indigo darken-2"
             prepend-inner-icon="mdi-magnify"
           ></v-text-field>
         </form>

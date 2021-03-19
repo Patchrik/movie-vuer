@@ -1,7 +1,7 @@
 <template>
-  <div v-if="movieReviews && movieReviews.length > 0">
-    <h3 class="primary--text">User Reviews</h3>
-    <v-list three-line class="v-list-container">
+  <div v-if="movieReviews && movieReviews.length > 0" class="secondary">
+    <h3 class="ml-2">User Reviews</h3>
+    <v-list three-line class="v-list-container secondary" dark>
       <v-list-item v-for="review in movieReviews" :key="review.id">
         <v-list-item-avatar>
           <v-img
@@ -15,8 +15,8 @@
           <v-list-item-subtitle>
             {{ formatDate(review.created_at) }}
           </v-list-item-subtitle>
-          <v-expansion-panels>
-            <v-expansion-panel @click="openPanel">
+          <v-expansion-panels light>
+            <v-expansion-panel class="background" @click="openPanel">
               <v-expansion-panel-header
                 expand-icon="mdi-book-open-blank-variant"
                 disable-icon-rotate
@@ -72,5 +72,8 @@
   }
   .v-list-container {
     border-radius: 5px !important;
+  }
+  h3 {
+    color: white;
   }
 </style>

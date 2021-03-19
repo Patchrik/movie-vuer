@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="movieDetails" height="auto">
+  <v-card v-if="movieDetails" height="auto" class="secondary card-details" dark>
     <v-img
       :src="`https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`"
     ></v-img>

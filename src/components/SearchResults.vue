@@ -13,6 +13,7 @@
     <v-slide-group class="pb-5" show-arrows>
       <v-slide-item v-for="movie in viewableMovies" :key="movie.id">
         <v-img
+          class="movie-img"
           @click="selectMovie(movie)"
           contain
           :src="`https://image.tmdb.org/t/p/w200${movie.poster_path}`"
@@ -37,7 +38,7 @@
   };
 </script>
 
-<style>
+<style scoped>
   .movie-slide-group {
     border-radius: 5px !important;
   }
