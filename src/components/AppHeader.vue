@@ -2,8 +2,8 @@
   <v-app-bar app color="primary" dark>
     <v-row justify="space-between" align="center">
       <v-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-        <div class="d-flex align-center">
-          <h1>where to vue</h1>
+        <div class="d-flex align-center title-header">
+          <h1 class="ma-1 pa-1">where to vue</h1>
         </div>
       </v-col>
 
@@ -17,6 +17,7 @@
             placeholder="Search movie titles"
             background-color="indigo darken-2"
             prepend-inner-icon="mdi-magnify"
+            class="search-box"
           ></v-text-field>
         </form>
       </v-col>
@@ -42,3 +43,9 @@
     },
   };
 </script>
+
+<style scoped>
+  .title-header {
+    font-size: 3vw;
+  }
+</style>
